@@ -23,16 +23,18 @@ local Stack = Class("Stack", nil, {
     end, -- }}}
 
     frame = function(self) -- {{{
-        -- All stacked windows have the same dimensions, 
+        -- All stacked windows have the same dimensions,
         -- so the 1st Hs window's frame is ~= to the stack's frame
-        -- FIXME: Incorrect when the 1st window has min-size < stack width 
+        -- FIXME: Incorrect when the 1st window has min-size < stack width
         --        See ./query.lua:104
         return self.windows[1]._win:frame()
     end, -- }}}
 
     eachWin = function(self, fn) -- {{{
         for _idx, win in pairs(self.windows) do
-            fn(win)
+            if win.stackIdx ~= nil then
+                fn(win)
+            end
         end
     end, -- }}}
 

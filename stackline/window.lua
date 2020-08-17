@@ -69,7 +69,7 @@ function Window:setupIndicator() -- {{{
     self.width = self.showIcons and c.size or (c.size / c.pillThinness)
     self.iconRadius = self.width / 3
 
-    -- Display indicators on 
+    -- Display indicators on
     --   left edge of windows on the left side of the screen, &
     --   right edge of windows on the right side of the screen
     self.side = self:getScreenSide()
@@ -194,6 +194,10 @@ function Window:redrawIndicator() -- {{{
         end
     end
 
+    if not self.indicator and self.stackIdx == nil then
+        return
+    end
+
     if not self.indicator then
         self:setupIndicator()
     end
@@ -229,7 +233,7 @@ function Window:getScreenSide() -- {{{
     -- very large padding settings. Will need to consider coordinates from both
     -- sides of a window. Impact is minimal with smaller threshold (<= 0.75).
 
-    -- TODO [very-low-priority]: find a way to use hs.window.filter.windowsTo{Dir} 
+    -- TODO [very-low-priority]: find a way to use hs.window.filter.windowsTo{Dir}
     -- to determine side instead of percLeft/Right
     --    https://www.hammerspoon.org/docs/hs.window.filter.html#windowsToWest
     --      wfd:windowsToWest(self._win)
@@ -303,7 +307,7 @@ function Window:getShadowAttrs() -- {{{
     -- shadow's angle to rotate around a point at the center of the screen (aka, 'light source').
     -- Here's a super crude POC that uses the indicator's stack index such that
     -- higher indicators have a negative Y offset and lower indicators have a
-    -- positive Y offset ;-) 
+    -- positive Y offset ;-)
     --   h = (self.focus and 3.0 or 2.0 - (2 + (self.stackIdx * 5))) * -1.0,
 
     return {
